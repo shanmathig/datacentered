@@ -55,14 +55,49 @@
       </div>
     </section>
 
+
+    
     <section class="story-section section-wrap" id="geography">
       <div class="section-kicker">01 / THE LANDSCAPE</div>
-      <div class="story-header"><div><h2>Not all places are<br /><span class="gradient-text">created equal.</span></h2><p>This slot is ready for a map of data center locations across the United States, from established technology corridors to emerging regions.</p></div><span class="chapter-index">01 — 03</span></div>
+
+      <div class="story-header">
+        <div>
+          <h2>
+            Not all places are<br />
+            <span class="gradient-text">created equal.</span>
+          </h2>
+          <p>
+            Explore the geographic distribution of data centers
+            across the United States, from established technology
+            corridors to emerging regions.
+          </p>
+        </div>
+        <span class="chapter-index">01 — 03</span>
+      </div>
+
       <div class="visual-panel">
-        <div class="panel-top"><span><span class="status-dot"></span> GEOGRAPHIC DISTRIBUTION</span><span>IMPLEMENTED PLACEHOLDER</span></div>
-        <div class="chart-placeholder" id="chart-map"><div class="placeholder-icon">◎</div><h3>Interactive U.S. Data Center Map</h3><p>Placeholder for a county-level map of data center locations</p><span class="coming-soon">VISUALIZATION SLOT 01</span></div>
+        <div class="panel-top">
+          <span>
+            <span class="status-dot"></span>
+            GEOGRAPHIC DISTRIBUTION
+          </span>
+          <span>INTERACTIVE TABLEAU DASHBOARD</span>
+        </div>
+
+        <div class="tableau-container">
+          <tableau-viz
+            id="tableau-map"
+            src="https://public.tableau.com/shared/GM9D3S24M"
+            toolbar="bottom"
+            hide-tabs
+            width="100%"
+            height="827px">
+          </tableau-viz>
+        </div>
       </div>
     </section>
+
+
 
     <section class="story-section section-wrap" id="clustering">
       <div class="section-kicker">02 / THE CLUSTERING EFFECT</div>
@@ -94,5 +129,10 @@
   </main>
 
   <footer><a class="brand" href="#home">◈ DATA<span>CENTERED</span>.</a><span>GEORGIA TECH · CS 6730 · 2026</span><a href="https://github.com/shanmathig/datacentered" target="_blank" rel="noopener noreferrer">GITHUB ↗</a></footer>
+<script
+  type="module"
+  src="https://public.tableau.com/javascripts/api/tableau.embedding.3.latest.min.js">
+</script>
 </body>
 </html>
+

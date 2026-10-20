@@ -110,3 +110,24 @@ footer a:last-child { color: var(--cyan); }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; scroll-behavior: auto !important; transition: none !important; }
 }
+
+
+/* Tableau visualization - transparent, no spacing */
+.tableau-container {
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  overflow: hidden;
+}
+
+.tableau-container tableau-viz {
+  display: block;
+  width: 100%;
+  height: 827px;
+  border: none;
+  background: transparent;
+}
+
