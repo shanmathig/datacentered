@@ -6,11 +6,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#070b14" />
   <title>Data Centered | The Geography of AI</title>
-  <meta name="description" content="A research project exploring data center placement across the United States, with three planned visualization slots." />
+  <meta name="description" content="Explore county-level data center placement, infrastructure, and water data across the United States." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/topojson-client@3.1.0/dist/topojson-client.min.js" defer></script>
   <script src="js/main.js" defer></script>
 </head>
 <body>
@@ -33,7 +35,7 @@
       <div class="hero-content">
         <div class="eyebrow"><span class="live-dot"></span> DATA CENTER RESEARCH <span class="eyebrow-line"></span> 2026</div>
         <h1>Data Centers. Why Here?</h1>
-        <p class="hero-description">Behind every AI breakthrough is a physical infrastructure. Explore the research questions shaping our study of America's data center landscape. Interactive visualizations will be added by our team.</p>
+        <p class="hero-description">Behind every AI breakthrough is a physical infrastructure. Explore county-level data on America's data centers, population, and water resources.</p>
         <div class="hero-actions">
           <a href="#overview" class="btn btn-primary">Explore the project <span>↗</span></a>
           <a href="#about" class="btn btn-outline">Our methodology <span>↗</span></a>
@@ -49,9 +51,9 @@
         <p>Data centers aren't distributed evenly across the United States. They concentrate in established hubs where infrastructure, geography, and market conditions intersect. We investigate what makes these places different.</p>
       </div>
       <div class="stat-grid">
-        <div class="stat-card"><div class="stat-number">03</div><div class="stat-label">VISUALIZATION PLACEHOLDERS</div></div>
-        <div class="stat-card"><div class="stat-number">US<span>.</span></div><div class="stat-label">COUNTY-LEVEL ANALYSIS</div></div>
-        <div class="stat-card"><div class="stat-number">05<span>×</span></div><div class="stat-label">RESEARCH DIMENSIONS</div></div>
+        <div class="stat-card"><div class="stat-number">3,144</div><div class="stat-label">COUNTIES IN THE DATASET</div></div>
+        <div class="stat-card"><div class="stat-number">51<span>.</span></div><div class="stat-label">STATES & DISTRICT OF COLUMBIA</div></div>
+        <div class="stat-card"><div class="stat-number">572</div><div class="stat-label">COUNTIES WITH LISTED FACILITIES</div></div>
       </div>
     </section>
 
@@ -66,11 +68,7 @@
             Not all places are<br />
             <span class="gradient-text">created equal.</span>
           </h2>
-          <p>
-            Explore the geographic distribution of data centers
-            across the United States, from established technology
-            corridors to emerging regions.
-          </p>
+          <p>Explore listed and operating data centers alongside county-level water conditions. Select a measure, then hover over a county to inspect its data.</p>
         </div>
         <span class="chapter-index">01 — 03</span>
       </div>
@@ -79,21 +77,39 @@
         <div class="panel-top">
           <span>
             <span class="status-dot"></span>
-            GEOGRAPHIC DISTRIBUTION
+            COUNTY-LEVEL DATA
           </span>
-          <span>INTERACTIVE TABLEAU DASHBOARD</span>
+          <span>3,144 COUNTIES · 2024 GEOGRAPHIES</span>
         </div>
 
-        <div class="tableau-container">
-          <tableau-viz
-            id="tableau-map"
-            src="https://public.tableau.com/shared/GM9D3S24M"
-            toolbar="bottom"
-            hide-tabs
-            width="100%"
-            height="827px">
-          </tableau-viz>
+        <div class="map-toolbar">
+          <span class="map-measure-label">MAP MEASURE</span>
+          <div class="map-measure-switch" role="group" aria-label="Choose a map measure">
+            <button class="map-measure-option" type="button" data-metric="listed_facility_count" aria-pressed="true">Listed facilities</button>
+            <button class="map-measure-option" type="button" data-metric="operating_facility_count" aria-pressed="false">Operating facilities</button>
+          </div>
+          <span class="map-hint">Hover for county details · Click a county to select its state</span>
         </div>
+        <div class="map-stage" id="map-stage">
+          <svg id="county-map" role="img" aria-label="Map of county-level data across the United States"></svg>
+          <div class="map-tooltip" id="map-tooltip" role="status" hidden></div>
+          <section class="region-popup" id="region-popup" aria-labelledby="region-popup-title" aria-live="polite" hidden>
+            <button class="region-popup-close" id="region-popup-close" type="button" aria-label="Clear selected state">×</button>
+            <span class="mini-label">STATE TOTALS</span>
+            <h3 id="region-popup-title"></h3>
+            <div class="region-popup-stats">
+              <div><strong id="region-listed-total">0</strong><span>LISTED FACILITIES</span></div>
+              <div><strong id="region-operating-total">0</strong><span>OPERATING FACILITIES</span></div>
+            </div>
+            <p id="region-county-count"></p>
+          </section>
+          <div class="map-loading" id="map-loading" role="status">Loading county data…</div>
+        </div>
+        <div class="map-footer">
+          <div class="map-legend" id="map-legend" aria-label="Map legend"></div>
+          <p class="map-summary" id="map-summary" aria-live="polite">Hover or tap a county to see its details.</p>
+        </div>
+        <p class="map-source-note">Facility counts follow the source dataset’s listed and operating categories.</p>
       </div>
     </section>
 
@@ -123,16 +139,11 @@
       <p>Data Centered is a Georgia Tech CS 6730 group project exploring the geographic, infrastructure, and socioeconomic characteristics associated with data center placement across the United States.</p>
       <div class="about-grid">
         <div><span class="mini-label">THE TEAM</span><p>Sharon Arulpragasam<br />Rhea Iyer<br />Shanmathi Gunasekaran<br />Khushi Gandhi<br />David Nuthakki</p></div>
-        <div><span class="mini-label">DATA & METHODOLOGY</span><p>Our research draws on data from FracTracker Alliance, the U.S. Census Bureau, EIA, FCC, FEMA, and additional public sources. Dataset documentation and limitations will be added as visualizations are finalized.</p></div>
+        <div><span class="mini-label">DATA & METHODOLOGY</span><p>Our research draws on data from FracTracker Alliance, the U.S. Census Bureau, EIA, FCC, FEMA, and additional public sources. The county map uses our cleaned county-level dataset; water availability and stress are watershed-level USGS annual values summarized to counties, with coverage varying by measure.</p></div>
       </div>
     </section>
   </main>
 
   <footer><a class="brand" href="#home">◈ DATA<span>CENTERED</span>.</a><span>GEORGIA TECH · CS 6730 · 2026</span><a href="https://github.com/shanmathig/datacentered" target="_blank" rel="noopener noreferrer">GITHUB ↗</a></footer>
-<script
-  type="module"
-  src="https://public.tableau.com/javascripts/api/tableau.embedding.3.latest.min.js">
-</script>
 </body>
 </html>
-
