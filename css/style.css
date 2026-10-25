@@ -74,6 +74,8 @@ h2 { font-size: clamp(36px,4.4vw,65px); line-height: 1.15; letter-spacing: -2.5p
 .panel-top > span:first-child { color: #d3deef; }
 .status-dot { width: 6px; height: 6px; margin-right: 8px; }
 .chart-placeholder { min-height: 470px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 35px; background-image: radial-gradient(rgba(78,232,224,.065) 1px,transparent 1px); background-size: 23px 23px; }
+.tableau-embed { position: relative; width: 100%; }
+.tableau-embed noscript img { display: block; width: 100%; height: auto; border: 0; }
 .placeholder-icon { font-size: 64px; color: var(--cyan); opacity: .8; margin-bottom: 15px; }
 .chart-placeholder h3 { font-size: 24px; margin-bottom: 8px; }
 .chart-placeholder p { color: var(--muted); font-size: 13px; }
@@ -152,3 +154,5 @@ footer a:last-child { color: var(--cyan); }
 .map-summary { margin: 0; color: #9aa9c2; font-size: 12px; }
 .map-source-note { margin: 0; padding: 0 24px 20px; color: #71809a; font-size: 11px; line-height: 1.6; }
 .map-error { max-width: 520px; margin: 40px auto; padding: 18px; border: 1px solid rgba(255,130,130,.35); border-radius: 8px; color: #ffc2c2; background: rgba(115,35,48,.15); text-align: center; font-size: 13px; line-height: 1.6; }
+.map-retry { margin-top: 12px; padding: 9px 13px; border: 1px solid rgba(255,130,130,.45); border-radius: 5px; background: transparent; color: inherit; cursor: pointer; }
+.map-retry:hover,.map-retry:focus-visible { background: rgba(255,130,130,.12); outline-color: #ffc2c2; }

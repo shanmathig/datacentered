@@ -11,8 +11,6 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/style.css" />
-  <script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js" defer></script>
-  <script src="https://cdn.jsdelivr.net/npm/topojson-client@3.1.0/dist/topojson-client.min.js" defer></script>
   <script src="js/main.js" defer></script>
 </head>
 <body>
@@ -117,10 +115,51 @@
 
     <section class="story-section section-wrap" id="clustering">
       <div class="section-kicker">02 / THE CLUSTERING EFFECT</div>
-      <div class="story-header"><div><h2>Where people gather,<br /><span class="gradient-text">infrastructure follows.</span></h2><p>A draft slot for exploring the relationship between population density and data center concentration.</p></div><span class="chapter-index">02 — 03</span></div>
+      <div class="story-header"><div><h2>Data center concentration<br /><span class="gradient-text">across the rural–urban spectrum.</span></h2><p>Explore how data center concentration varies across the rural–urban spectrum.</p></div><span class="chapter-index">02 — 03</span></div>
       <div class="visual-panel">
-        <div class="panel-top"><span><span class="status-dot"></span> POPULATION & CLUSTERING</span><span>DRAFT PLACEHOLDER</span></div>
-        <div class="chart-placeholder" id="chart-clustering"><div class="placeholder-icon">◌</div><h3>Population & Data Center Clusters</h3><p>Draft placeholder for comparing population density with data center locations</p><span class="coming-soon">VISUALIZATION SLOT 02</span></div>
+        <div class="panel-top"><span><span class="status-dot"></span> DATA CENTER CONCENTRATION</span><span>RURAL–URBAN SPECTRUM</span></div>
+        <div class="tableau-embed" id="viz1792970312446" role="region" aria-label="Data Center Concentration Across the Rural–Urban Spectrum">
+          <noscript>
+            <a href="https://public.tableau.com/views/DataCenteredVisualization2/DataCenterConcentrationAcrosstheRuralUrbanSpectrum">
+              <img alt="Data Center Concentration Across the Rural–Urban Spectrum" src="https://public.tableau.com/static/images/Da/DataCenteredVisualization2/DataCenterConcentrationAcrosstheRuralUrbanSpectrum/1_rss.png" />
+            </a>
+          </noscript>
+          <object class="tableauViz" title="Data Center Concentration Across the Rural–Urban Spectrum" style="display:none;">
+            <param name="host_url" value="https%3A%2F%2Fpublic.tableau.com%2F" />
+            <param name="embed_code_version" value="3" />
+            <param name="site_root" value="" />
+            <param name="name" value="DataCenteredVisualization2/DataCenterConcentrationAcrosstheRuralUrbanSpectrum" />
+            <param name="tabs" value="no" />
+            <param name="toolbar" value="yes" />
+            <param name="static_image" value="https://public.tableau.com/static/images/Da/DataCenteredVisualization2/DataCenterConcentrationAcrosstheRuralUrbanSpectrum/1.png" />
+            <param name="animate_transition" value="yes" />
+            <param name="display_static_image" value="yes" />
+            <param name="display_spinner" value="yes" />
+            <param name="display_overlay" value="yes" />
+            <param name="display_count" value="yes" />
+            <param name="language" value="en-US" />
+            <param name="filter" value="publish=yes" />
+          </object>
+        </div>
+        <script>
+          const tableauContainer = document.getElementById("viz1792970312446");
+          const tableauObject = tableauContainer.querySelector("object");
+          const resizeTableauViz = () => {
+            const tableauViz = tableauContainer.querySelector("iframe, object.tableauViz");
+            if (!tableauViz) return;
+            tableauViz.style.width = "100%";
+            tableauViz.style.height = `${tableauContainer.offsetWidth * 0.75}px`;
+          };
+          resizeTableauViz();
+          window.addEventListener("resize", resizeTableauViz);
+          const tableauScript = document.createElement("script");
+          tableauScript.src = "https://public.tableau.com/javascripts/api/viz_v1.js";
+          tableauScript.onerror = () => {
+            console.error("Unable to load the Tableau visualization.");
+            tableauContainer.textContent = "The Tableau visualization could not load. Check your connection and reload the page.";
+          };
+          tableauObject.parentNode.insertBefore(tableauScript, tableauObject);
+        </script>
       </div>
     </section>
 

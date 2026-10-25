@@ -28,6 +28,31 @@ const mapMetrics = {
 
 const turquoiseAt = value => d3.hsl(177, 0.72, 0.14 + value * 0.50).formatRgb();
 
+function loadDependency(source, isLoaded) {
+  if (isLoaded()) return Promise.resolve();
+
+  return new Promise((resolve, reject) => {
+    const script = document.createElement("script");
+    const timeout = setTimeout(() => finish(new Error(`Timed out loading ${source}`)), 12000);
+    const finish = error => {
+      clearTimeout(timeout);
+      script.onload = null;
+      script.onerror = null;
+      if (error) {
+        script.remove();
+        reject(error);
+      } else {
+        resolve();
+      }
+    };
+
+    script.src = source;
+    script.onload = () => finish(isLoaded() ? null : new Error(`Dependency did not initialize: ${source}`));
+    script.onerror = () => finish(new Error(`Failed to load ${source}`));
+    document.head.append(script);
+  });
+}
+
 async function initializeCountyMap() {
   const stage = document.getElementById("map-stage");
   const loading = document.getElementById("map-loading");
@@ -40,11 +65,24 @@ async function initializeCountyMap() {
   let renderMap = () => {};
 
   try {
-    const svg = d3.select("#county-map");
-    const [rows, topology] = await Promise.all([
-      d3.csv("data/cleaned_dataset_with_water(in).csv"),
-      d3.json("https://cdn.jsdelivr.net/npm/us-atlas@3/counties-10m.json"),
+    await Promise.all([
+      loadDependency("https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js", () => typeof window.d3 !== "undefined"),
+      loadDependency("https://cdn.jsdelivr.net/npm/topojson-client@3.1.0/dist/topojson-client.min.js", () => typeof window.topojson !== "undefined"),
     ]);
+
+    const svg = d3.select("#county-map");
+    const controller = new AbortController();
+    const dataTimeout = setTimeout(() => controller.abort(), 20000);
+    let rows;
+    let topology;
+    try {
+      [rows, topology] = await Promise.all([
+        d3.csv("data/cleaned_dataset_with_water(in).csv", { signal: controller.signal }),
+        d3.json("https://cdn.jsdelivr.net/npm/us-atlas@3/counties-10m.json", { signal: controller.signal }),
+      ]);
+    } finally {
+      clearTimeout(dataTimeout);
+    }
     const data = new Map(rows.map(row => [String(row.county_fips).padStart(5, "0"), row]));
     const counties = topojson.feature(topology, topology.objects.counties).features;
     const geometry = { type: "FeatureCollection", features: counties };
@@ -171,7 +209,8 @@ async function initializeCountyMap() {
   } catch (error) {
     console.error("Unable to load county map data:", error);
     loading.hidden = true;
-    stage.innerHTML = '<div class="map-error">The county map could not load. Check your connection and confirm the dataset is available in the data folder.</div>';
+    stage.innerHTML = '<div class="map-error">The county map could not load. Check your internet connection and reload the page to try again.<br><button class="map-retry" type="button">Reload map</button></div>';
+    stage.querySelector(".map-retry").addEventListener("click", () => window.location.reload());
     summary.textContent = "Map data could not be loaded.";
     legend.textContent = "";
   }
