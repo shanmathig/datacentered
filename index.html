@@ -110,51 +110,25 @@
 
     <section class="story-section section-wrap" id="clustering">
       <div class="section-kicker">02 / THE CLUSTERING EFFECT</div>
-      <div class="story-header"><div><h2>Data center concentration<br /><span class="gradient-text">across the rural–urban spectrum.</span></h2><p>We can see that data centers are in mostly urban areas, notice their concentration in this graph.</p></div><span class="chapter-index">02 — 05</span></div>
+      <div class="story-header"><div><h2>Data center concentration<br /><span class="gradient-text">across the rural–urban spectrum.</span></h2><p>Compare the share of counties with facilities across all nine USDA rural–urban county codes.</p></div><span class="chapter-index">02 — 05</span></div>
       <div class="visual-panel">
-        <div class="panel-top"><span><span class="status-dot"></span> DATA CENTER CONCENTRATION</span><span>RURAL–URBAN SPECTRUM</span></div>
-        <div class="tableau-embed" id="viz1792970312446" role="region" aria-label="Data Center Concentration Across the Rural–Urban Spectrum">
-          <noscript>
-            <a href="https://public.tableau.com/views/DataCenteredVisualization2/DataCenterConcentrationAcrosstheRuralUrbanSpectrum">
-              <img alt="Data Center Concentration Across the Rural–Urban Spectrum" src="https://public.tableau.com/static/images/Da/DataCenteredVisualization2/DataCenterConcentrationAcrosstheRuralUrbanSpectrum/1_rss.png" />
-            </a>
-          </noscript>
-          <object class="tableauViz" title="Data Center Concentration Across the Rural–Urban Spectrum" style="display:none;">
-            <param name="host_url" value="https%3A%2F%2Fpublic.tableau.com%2F" />
-            <param name="embed_code_version" value="3" />
-            <param name="site_root" value="" />
-            <param name="name" value="DataCenteredVisualization2/DataCenterConcentrationAcrosstheRuralUrbanSpectrum" />
-            <param name="tabs" value="no" />
-            <param name="toolbar" value="yes" />
-            <param name="static_image" value="https://public.tableau.com/static/images/Da/DataCenteredVisualization2/DataCenterConcentrationAcrosstheRuralUrbanSpectrum/1.png" />
-            <param name="animate_transition" value="yes" />
-            <param name="display_static_image" value="yes" />
-            <param name="display_spinner" value="yes" />
-            <param name="display_overlay" value="yes" />
-            <param name="display_count" value="yes" />
-            <param name="language" value="en-US" />
-            <param name="filter" value="publish=yes" />
-          </object>
+        <div class="panel-top"><span><span class="status-dot"></span> FACILITY PRESENCE BY RURAL–URBAN CODE</span><span>3,144 COUNTIES · USDA RUCC 2023</span></div>
+        <div class="chart-toolbar">
+          <span class="map-measure-label">FACILITY MEASURE</span>
+          <div class="map-measure-switch" role="group" aria-label="Choose a facility measure for the rural–urban chart">
+            <button class="chart-metric-option rural-metric-option" type="button" data-metric="listed" aria-pressed="true">Listed</button>
+            <button class="chart-metric-option rural-metric-option" type="button" data-metric="operating" aria-pressed="false">Operating</button>
+          </div>
+          <span class="chart-control-hint">Share of counties with at least one facility</span>
         </div>
-        <script>
-          const tableauContainer = document.getElementById("viz1792970312446");
-          const tableauObject = tableauContainer.querySelector("object");
-          const resizeTableauViz = () => {
-            const tableauViz = tableauContainer.querySelector("iframe, object.tableauViz");
-            if (!tableauViz) return;
-            tableauViz.style.width = "100%";
-            tableauViz.style.height = `${tableauContainer.offsetWidth * 0.75}px`;
-          };
-          resizeTableauViz();
-          window.addEventListener("resize", resizeTableauViz);
-          const tableauScript = document.createElement("script");
-          tableauScript.src = "https://public.tableau.com/javascripts/api/viz_v1.js";
-          tableauScript.onerror = () => {
-            console.error("Unable to load the Tableau visualization.");
-            tableauContainer.textContent = "The Tableau visualization could not load. Check your connection and reload the page.";
-          };
-          tableauObject.parentNode.insertBefore(tableauScript, tableauObject);
-        </script>
+        <div class="story-chart-stage" id="rural-chart-stage">
+          <svg id="rural-chart" role="img" aria-label="Share of counties with data center facilities by rural–urban county code"></svg>
+          <div class="story-chart-loading" id="rural-chart-loading" role="status">Loading county data…</div>
+        </div>
+        <div class="story-chart-footer">
+          <p class="story-chart-summary" id="rural-chart-summary" aria-live="polite">Hover over a bar for county and facility counts.</p>
+          <p class="story-chart-note">Source: cleaned county dataset. Cyan marks metro counties (RUCC 1–3); purple marks nonmetro counties (RUCC 4–9). This view counts counties, not individual facilities.</p>
+        </div>
       </div>
     </section>
 
@@ -163,45 +137,33 @@
       <div class="story-header">
         <div>
           <h2>It's never just<br /><span class="gradient-text">one factor.</span></h2>
-          <p>We can see here with these different hubs that they all have an interesting combination of factors and show it is not just one variable that is shared across them.</p>
+          <p>Compare county facility presence across income, population growth, and watershed water measures. These patterns are descriptive and do not show that any one factor causes facility placement.</p>
         </div>
         <span class="chapter-index">03 — 05</span>
       </div>
       <div class="visual-panel featured-panel">
-        <div class="panel-top"><span><span class="status-dot"></span> HUB ANALYSIS</span><span>KEY FACTORS</span></div>
-        
-        <div class='tableauPlaceholder' id='viz1793840549064' style='position: relative'>
-          <noscript>
-            <a href='#'>
-              <img alt='Key Factors Across Major Hubs ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;da&#47;datavizprojectviz1&#47;Sheet1&#47;1_rss.png' style='border: none' />
-            </a>
-          </noscript>
-          <object class='tableauViz' style='display:none;'>
-            <param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> 
-            <param name='embed_code_version' value='3' /> 
-            <param name='site_root' value='' />
-            <param name='name' value='datavizprojectviz1&#47;Sheet1' />
-            <param name='tabs' value='no' />
-            <param name='toolbar' value='yes' />
-            <param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;da&#47;datavizprojectviz1&#47;Sheet1&#47;1.png' /> 
-            <param name='animate_transition' value='yes' />
-            <param name='display_static_image' value='yes' />
-            <param name='display_spinner' value='yes' />
-            <param name='display_overlay' value='yes' />
-            <param name='display_count' value='yes' />
-            <param name='language' value='en-US' />
-            <param name='filter' value='publish=yes' />
-          </object>
+        <div class="panel-top"><span><span class="status-dot"></span> COUNTY FACTOR EXPLORER</span><span>UNADJUSTED ASSOCIATIONS · NOT CAUSATION</span></div>
+        <div class="chart-toolbar factor-toolbar">
+          <label class="map-measure-label" for="factor-select">COMPARE FACILITY PRESENCE WITH</label>
+          <select id="factor-select" class="chart-factor-select">
+            <option value="median_household_income_2024_usd">Median household income</option>
+            <option value="population_growth_pct_2020_2024">Population growth (2020–24)</option>
+            <option value="water_stress_huc_mean">Watershed water stress</option>
+            <option value="water_availability_huc_mean_mm_per_month">Watershed water availability</option>
+          </select>
+          <div class="map-measure-switch" role="group" aria-label="Choose a facility measure for the factor chart">
+            <button class="chart-metric-option factor-metric-option" type="button" data-metric="listed" aria-pressed="true">Listed</button>
+            <button class="chart-metric-option factor-metric-option" type="button" data-metric="operating" aria-pressed="false">Operating</button>
+          </div>
         </div>
-        <script type='text/javascript'>
-          var divElement = document.getElementById('viz1793840549064');
-          var vizElement = divElement.getElementsByTagName('object')[0];
-          vizElement.style.width='100%';
-          vizElement.style.height=(divElement.offsetWidth*0.75)+'px';
-          var scriptElement = document.createElement('script');
-          scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';
-          vizElement.parentNode.insertBefore(scriptElement, vizElement);
-        </script>
+        <div class="story-chart-stage factor-chart-stage" id="factor-chart-stage">
+          <svg id="factor-chart" role="img" aria-label="County facility presence rates across ranked factor groups"></svg>
+          <div class="story-chart-loading" id="factor-chart-loading" role="status">Loading county data…</div>
+        </div>
+        <div class="story-chart-footer">
+          <p class="story-chart-summary" id="factor-chart-summary" aria-live="polite">Hover over a point for the factor range and county counts.</p>
+          <p class="story-chart-note">Source: cleaned county dataset. Counties are grouped into factor quantiles; groups may be uneven where many share a value, and missing factor values are excluded. Water measures are watershed-level county summaries. Associations are descriptive and do not imply causation.</p>
+        </div>
       </div>
     </section>
 
@@ -209,46 +171,29 @@
       <div class="section-kicker">04 / SERVICE LINES</div>
       <div class="story-header">
         <div>
-          <h2>Distance from Service Lines vs<br /><span class="gradient-text">Number of Data Centers.</span></h2>
-          <p>Exploring how proximity to physical service line infrastructure affects data center placement.</p>
+          <h2>Closer to the grid?<br /><span class="gradient-text">Counties, compared.</span></h2>
+          <p>Each point represents a county with a reported median estimated facility-to-line distance. Compare that distance with the county’s listed or operating facility count.</p>
         </div>
         <span class="chapter-index">04 — 05</span>
       </div>
       <div class="visual-panel featured-panel">
-        <div class="panel-top"><span><span class="status-dot"></span> INFRASTRUCTURE</span><span>SERVICE LINES</span></div>
-        
-        <div class='tableauPlaceholder' id='viz1793839909112' style='position: relative'>
-          <noscript>
-            <a href='#'>
-              <img alt='Distance from Service Lines vs Number of Data Centers ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Da&#47;DataCenteredVisualization2&#47;DistancefromServiceLinesvsNumberofDataCenters&#47;1_rss.png' style='border: none' />
-            </a>
-          </noscript>
-          <object class='tableauViz' style='display:none;'>
-            <param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> 
-            <param name='embed_code_version' value='3' /> 
-            <param name='site_root' value='' />
-            <param name='name' value='DataCenteredVisualization2&#47;DistancefromServiceLinesvsNumberofDataCenters' />
-            <param name='tabs' value='no' />
-            <param name='toolbar' value='yes' />
-            <param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Da&#47;DataCenteredVisualization2&#47;DistancefromServiceLinesvsNumberofDataCenters&#47;1.png' /> 
-            <param name='animate_transition' value='yes' />
-            <param name='display_static_image' value='yes' />
-            <param name='display_spinner' value='yes' />
-            <param name='display_overlay' value='yes' />
-            <param name='display_count' value='yes' />
-            <param name='language' value='en-US' />
-            <param name='filter' value='publish=yes' />
-          </object>
+        <div class="panel-top"><span><span class="status-dot"></span> COUNTY FACILITY COUNTS & LINE DISTANCE</span><span>COUNTY-LEVEL ESTIMATES</span></div>
+        <div class="chart-toolbar">
+          <span class="map-measure-label">FACILITY MEASURE</span>
+          <div class="map-measure-switch" role="group" aria-label="Choose a facility measure for the service-line chart">
+            <button class="chart-metric-option line-metric-option" type="button" data-metric="listed" aria-pressed="true">Listed</button>
+            <button class="chart-metric-option line-metric-option" type="button" data-metric="operating" aria-pressed="false">Operating</button>
+          </div>
+          <span class="chart-control-hint">Hover near a point for county details · logarithmic distance axis</span>
         </div>
-        <script type='text/javascript'>
-          var divElement = document.getElementById('viz1793839909112');
-          var vizElement = divElement.getElementsByTagName('object')[0];
-          vizElement.style.width='100%';
-          vizElement.style.height=(divElement.offsetWidth*0.75)+'px';
-          var scriptElement = document.createElement('script');
-          scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';
-          vizElement.parentNode.insertBefore(scriptElement, vizElement);
-        </script>
+        <div class="story-chart-stage service-line-chart-stage" id="service-line-chart-stage">
+          <svg id="service-line-chart" role="img" aria-label="Scatter plot of county listed or operating facility count against estimated median distance to an in-service line" aria-describedby="service-line-chart-summary"></svg>
+          <div class="story-chart-loading" id="service-line-chart-loading" role="status">Loading county data…</div>
+        </div>
+        <div class="story-chart-footer">
+          <p class="story-chart-summary" id="service-line-chart-summary" aria-live="polite">Each point represents a county with a reported line-distance estimate.</p>
+          <p class="story-chart-note">Source: cleaned county dataset. The horizontal axis is logarithmic because reported distances span several orders of magnitude. Counties without a reported distance are omitted; points may overlap. This descriptive comparison does not imply causation.</p>
+        </div>
       </div>
     </section>
 
@@ -256,43 +201,21 @@
       <div class="section-kicker">05 / RESOURCE INTENSITY</div>
       <div class="story-header">
         <div>
-          <h2><br /><span class="gradient-text">Water stress</span> on different counties</h2>
-          <p>Data centers need lots of water to cool themselves. Explore how much states' water infrastructure is impacted by data center placement.</p>
+          <h2>Operating facilities<br /><span class="gradient-text">and county water stress.</span></h2>
+          <p>Each bubble represents a state or DC. Larger bubbles indicate more operating facilities; color shows the average reported watershed water-stress value across counties.</p>
         </div>
         <span class="chapter-index">05 — 05</span>
       </div>
       <div class="visual-panel featured-panel">
-        <div class="panel-top"><span><span class="status-dot"></span> ENVIRONMENTAL FACTORS</span><span>WATER STRESS BY STATE</span></div>
-        <div class='tableauPlaceholder' id='viz1792597181793' style='position: relative'>
-          <noscript>
-            <a href='#'>
-              <img alt='Operating Data Centers and Water Stress by State ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Wa&#47;WaterStressViz&#47;Sheet1&#47;1_rss.png' style='border: none' />
-            </a>
-          </noscript>
-          <object class='tableauViz'  style='display:none;'>
-            <param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> 
-            <param name='embed_code_version' value='3' /> 
-            <param name='site_root' value='' />
-            <param name='name' value='WaterStressViz&#47;Sheet1' />
-            <param name='tabs' value='no' /><param name='toolbar' value='yes' />
-            <param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Wa&#47;WaterStressViz&#47;Sheet1&#47;1.png' /> 
-            <param name='animate_transition' value='yes' />
-            <param name='display_static_image' value='yes' />
-            <param name='display_spinner' value='yes' />
-            <param name='display_overlay' value='yes' />
-            <param name='display_count' value='yes' />
-            <param name='language' value='en-US' />
-            <param name='filter' value='publish=yes' />
-          </object>
-        </div>                
-        <script type='text/javascript'>
-          var divElement = document.getElementById('viz1792597181793');
-          var vizElement = divElement.getElementsByTagName('object')[0];
-          vizElement.style.width='100%';vizElement.style.height=(divElement.offsetWidth*0.75)+'px';
-          var scriptElement = document.createElement('script');
-          scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';
-          vizElement.parentNode.insertBefore(scriptElement, vizElement);
-        </script>
+        <div class="panel-top"><span><span class="status-dot"></span> OPERATING FACILITIES & WATERSHED WATER STRESS</span><span>STATE BUBBLE CHART · STATE AGGREGATES</span></div>
+        <div class="story-chart-stage water-stress-chart-stage" id="water-stress-chart-stage">
+          <svg id="water-stress-chart" role="img" aria-label="Bubble chart of operating facility counts and mean county watershed water stress by state"></svg>
+          <div class="story-chart-loading" id="water-stress-chart-loading" role="status">Loading county data…</div>
+        </div>
+        <div class="story-chart-footer">
+          <p class="story-chart-summary" id="water-stress-chart-summary" aria-live="polite">Hover over or focus a bubble to inspect its state and county coverage.</p>
+          <p class="story-chart-note">Source: cleaned county dataset. Bubble area represents operating facility count among counties with reported stress; color represents the unweighted mean county watershed water-stress indicator (0–1). Jurisdictions with zero operating facilities are omitted. Alaska and Hawaii have no reported county stress values in this dataset.</p>
+        </div>
       </div>
     </section>
 
