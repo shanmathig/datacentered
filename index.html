@@ -55,6 +55,14 @@
     </section>
 
     <section class="story-section section-wrap" id="geography">
+      <aside class="linking-guide" aria-labelledby="linking-guide-title">
+        <div>
+          <span class="mini-label">BRUSHING & LINKING</span>
+          <h2 id="linking-guide-title">Follow a county across the charts</h2>
+          <p>Start in <strong>01 / The Landscape</strong> by clicking a county on the map, or in <strong>04 / Service Lines</strong> by clicking a county point. The gold highlight follows that county across the visualizations; grouped charts highlight its category and the water chart highlights its state. Click the same county again, or use the clear button, to reset.</p>
+        </div>
+        <button class="clear-linked-selection" id="clear-linked-selection" type="button">Clear county selection</button>
+      </aside>
       <div class="section-kicker">01 / THE LANDSCAPE</div>
 
       <div class="story-header">
@@ -83,8 +91,7 @@
             <button class="map-measure-option" type="button" data-metric="listed_facility_count" aria-pressed="true">Listed facilities</button>
             <button class="map-measure-option" type="button" data-metric="operating_facility_count" aria-pressed="false">Operating facilities</button>
           </div>
-          <span class="map-hint">Click a county to link it; click it again to clear</span>
-          <button class="clear-linked-selection" id="clear-linked-selection" type="button" hidden>Clear county selection</button>
+          <span class="map-hint">Hover for county details</span>
         </div>
         <div class="map-stage" id="map-stage">
           <svg id="county-map" role="img" aria-label="Map of county-level data across the United States"></svg>
@@ -179,7 +186,7 @@
             <button class="chart-metric-option line-metric-option" type="button" data-metric="listed" aria-pressed="true">Listed</button>
             <button class="chart-metric-option line-metric-option" type="button" data-metric="operating" aria-pressed="false">Operating</button>
           </div>
-          <span class="chart-control-hint">Click a point to link its county; click it again to clear · logarithmic distance axis</span>
+          <span class="chart-control-hint">Hover near a point for county details · logarithmic distance axis</span>
         </div>
         <div class="story-chart-stage service-line-chart-stage" id="service-line-chart-stage">
           <svg id="service-line-chart" role="img" aria-label="Scatter plot of county listed or operating facility count against estimated median distance to an in-service line" aria-describedby="service-line-chart-summary"></svg>

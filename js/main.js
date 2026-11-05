@@ -75,8 +75,7 @@ function setLinkedCountySelection(row) {
     stateName: row.state_name,
     rucc: Number(row.rucc_2023),
   } : null;
-  const clearButton = document.getElementById("clear-linked-selection");
-  if (clearButton) clearButton.hidden = !linkedCountySelection;
+  document.querySelector(".linking-guide")?.classList.toggle("has-linked-selection", Boolean(linkedCountySelection));
   linkedCountySelectionListeners.forEach(listener => listener(linkedCountySelection));
 }
 

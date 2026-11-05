@@ -121,9 +121,13 @@ footer a:last-child { color: var(--cyan); }
 .map-measure-option[aria-pressed="true"] { background: var(--cyan); color: #07121a; font-weight: 700; }
 .map-measure-option:focus-visible { outline: 2px solid var(--cyan); outline-offset: 3px; }
 .map-hint { margin-left: auto; color: #7888a4; font-size: 12px; }
-.clear-linked-selection { padding: 8px 11px; border: 1px solid rgba(255,230,109,.72); border-radius: 5px; background: rgba(255,230,109,.12); color: var(--linked-highlight); font-size: 11px; font-weight: 700; cursor: pointer; transition: background .18s,color .18s; }
+.linking-guide { display: flex; align-items: center; justify-content: space-between; gap: 24px; margin-bottom: 48px; padding: 22px 24px; border: 1px solid rgba(255,230,109,.3); border-left: 3px solid var(--linked-highlight); border-radius: 9px; background: linear-gradient(110deg,rgba(255,230,109,.08),rgba(14,20,35,.72) 58%); }
+.linking-guide h2 { margin: 8px 0 7px; font-size: clamp(20px,2.4vw,27px); letter-spacing: -.6px; }
+.linking-guide p { max-width: 850px; margin: 0; color: #aab8ce; font-size: 13px; line-height: 1.65; }
+.linking-guide p strong { color: var(--text); }
+.clear-linked-selection { padding: 8px 11px; border: 1px solid #46536b; border-radius: 5px; background: #111a2a; color: #aab8ce; font-size: 11px; font-weight: 700; cursor: pointer; transition: background .18s,color .18s,border-color .18s,box-shadow .18s; }
 .clear-linked-selection:hover,.clear-linked-selection:focus-visible { background: var(--linked-highlight); color: #171509; outline: 2px solid #fff; outline-offset: 2px; }
-.clear-linked-selection[hidden] { display: none; }
+.linking-guide.has-linked-selection .clear-linked-selection { border-color: var(--linked-highlight); background: rgba(255,230,109,.12); color: var(--linked-highlight); box-shadow: 0 0 0 1px rgba(255,230,109,.2),0 0 16px rgba(255,230,109,.28); }
 .map-stage { position: relative; min-height: 360px; background: radial-gradient(ellipse at 50% 45%,rgba(21,37,59,.52),transparent 72%); }
 #county-map { display: block; width: 100%; height: auto; }
 .county { stroke: rgba(7,11,20,.72); stroke-width: .45px; vector-effect: non-scaling-stroke; transition: fill .16s, opacity .16s; }
@@ -215,6 +219,7 @@ footer a:last-child { color: var(--cyan); }
 .overall-rate-label,.factor-end-label { fill: #8998b4; font: 9px var(--font); }
 
 @media (max-width: 650px) {
+  .linking-guide { align-items: flex-start; flex-direction: column; gap: 14px; margin-bottom: 38px; padding: 18px; }
   .chart-toolbar { padding: 15px 16px; }
   .chart-control-hint { width: 100%; margin-left: 0; }
   .factor-toolbar { align-items: flex-start; }
