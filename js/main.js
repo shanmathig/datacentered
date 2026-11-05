@@ -243,18 +243,6 @@ const storyFactors = {
     label: "Median household income",
     format: value => `$${d3.format(",.0f")(value)}`,
   },
-  population_growth_pct_2020_2024: {
-    label: "Population growth, 2020–24",
-    format: value => `${d3.format(".1f")(value)}%`,
-  },
-  water_stress_huc_mean: {
-    label: "Water stress indicator (0–1)",
-    format: value => d3.format(".2f")(value),
-  },
-  water_availability_huc_mean_mm_per_month: {
-    label: "Water availability (mm/month)",
-    format: value => `${d3.format(",.1f")(value)} mm/mo`,
-  },
 };
 
 async function initializeStoryCharts() {
@@ -292,7 +280,6 @@ async function initializeStoryCharts() {
     const factorSummary = document.getElementById("factor-chart-summary");
     const serviceLineSummary = document.getElementById("service-line-chart-summary");
     const waterStressSummary = document.getElementById("water-stress-chart-summary");
-    const factorSelect = document.getElementById("factor-select");
     let ruralMetric = "listed";
     let factorMetric = "listed";
     let serviceLineMetric = "listed";
@@ -404,7 +391,7 @@ async function initializeStoryCharts() {
     function renderFactorChart() {
       const width = factorStage.clientWidth;
       if (!width) return;
-      const factorKey = factorSelect.value;
+      const factorKey = "median_household_income_2024_usd";
       const factor = storyFactors[factorKey];
       const metricField = factorMetric === "listed" ? "listed_facility_count" : "operating_facility_count";
       const measureName = factorMetric === "listed" ? "listed" : "operating";
@@ -762,10 +749,6 @@ async function initializeStoryCharts() {
         factorTooltip.hidden = true;
         renderFactorChart();
       });
-    });
-    factorSelect.addEventListener("change", () => {
-      factorTooltip.hidden = true;
-      renderFactorChart();
     });
     document.querySelectorAll(".line-metric-option").forEach(button => {
       button.addEventListener("click", () => {

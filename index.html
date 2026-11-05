@@ -137,20 +137,14 @@
       <div class="story-header">
         <div>
           <h2>It's never just<br /><span class="gradient-text">one factor.</span></h2>
-          <p>Compare county facility presence across income, population growth, and watershed water measures. These patterns are descriptive and do not show that any one factor causes facility placement.</p>
+          <p>Compare county facility presence across median household income groups. This descriptive pattern does not establish that income causes facility placement.</p>
         </div>
         <span class="chapter-index">03 — 05</span>
       </div>
       <div class="visual-panel featured-panel">
-        <div class="panel-top"><span><span class="status-dot"></span> COUNTY FACTOR EXPLORER</span><span>UNADJUSTED ASSOCIATIONS · NOT CAUSATION</span></div>
+        <div class="panel-top"><span><span class="status-dot"></span> MEDIAN HOUSEHOLD INCOME</span><span>DESCRIPTIVE ASSOCIATION · NOT CAUSATION</span></div>
         <div class="chart-toolbar factor-toolbar">
-          <label class="map-measure-label" for="factor-select">COMPARE FACILITY PRESENCE WITH</label>
-          <select id="factor-select" class="chart-factor-select">
-            <option value="median_household_income_2024_usd">Median household income</option>
-            <option value="population_growth_pct_2020_2024">Population growth (2020–24)</option>
-            <option value="water_stress_huc_mean">Watershed water stress</option>
-            <option value="water_availability_huc_mean_mm_per_month">Watershed water availability</option>
-          </select>
+          <span class="map-measure-label">FACILITY PRESENCE BY MEDIAN HOUSEHOLD INCOME</span>
           <div class="map-measure-switch" role="group" aria-label="Choose a facility measure for the factor chart">
             <button class="chart-metric-option factor-metric-option" type="button" data-metric="listed" aria-pressed="true">Listed</button>
             <button class="chart-metric-option factor-metric-option" type="button" data-metric="operating" aria-pressed="false">Operating</button>
@@ -162,7 +156,7 @@
         </div>
         <div class="story-chart-footer">
           <p class="story-chart-summary" id="factor-chart-summary" aria-live="polite">Hover over a point for the factor range and county counts.</p>
-          <p class="story-chart-note">Source: cleaned county dataset. Counties are grouped into factor quantiles; groups may be uneven where many share a value, and missing factor values are excluded. Water measures are watershed-level county summaries. Associations are descriptive and do not imply causation.</p>
+          <p class="story-chart-note">Source: cleaned county dataset. Counties are grouped into income quantiles; groups may be uneven where many share a value, and counties with missing income values are excluded. Association is descriptive and does not imply causation.</p>
         </div>
       </div>
     </section>
