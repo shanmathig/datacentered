@@ -121,6 +121,9 @@ footer a:last-child { color: var(--cyan); }
 .map-measure-option[aria-pressed="true"] { background: var(--cyan); color: #07121a; font-weight: 700; }
 .map-measure-option:focus-visible { outline: 2px solid var(--cyan); outline-offset: 3px; }
 .map-hint { margin-left: auto; color: #7888a4; font-size: 12px; }
+.clear-linked-selection { padding: 8px 11px; border: 1px solid rgba(255,230,109,.72); border-radius: 5px; background: rgba(255,230,109,.12); color: var(--linked-highlight); font-size: 11px; font-weight: 700; cursor: pointer; transition: background .18s,color .18s; }
+.clear-linked-selection:hover,.clear-linked-selection:focus-visible { background: var(--linked-highlight); color: #171509; outline: 2px solid #fff; outline-offset: 2px; }
+.clear-linked-selection[hidden] { display: none; }
 .map-stage { position: relative; min-height: 360px; background: radial-gradient(ellipse at 50% 45%,rgba(21,37,59,.52),transparent 72%); }
 #county-map { display: block; width: 100%; height: auto; }
 .county { stroke: rgba(7,11,20,.72); stroke-width: .45px; vector-effect: non-scaling-stroke; transition: fill .16s, opacity .16s; }

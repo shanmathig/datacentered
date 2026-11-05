@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
     progress.style.width = `${max > 0 ? window.scrollY / max * 100 : 0}%`;
   }, { passive: true });
 
+  document.getElementById("clear-linked-selection").addEventListener("click", () => setLinkedCountySelection(null));
   initializeCountyMap();
   initializeStoryCharts();
 });
@@ -74,7 +75,14 @@ function setLinkedCountySelection(row) {
     stateName: row.state_name,
     rucc: Number(row.rucc_2023),
   } : null;
+  const clearButton = document.getElementById("clear-linked-selection");
+  if (clearButton) clearButton.hidden = !linkedCountySelection;
   linkedCountySelectionListeners.forEach(listener => listener(linkedCountySelection));
+}
+
+function toggleLinkedCountySelection(row) {
+  const fips = String(row.county_fips).padStart(5, "0");
+  setLinkedCountySelection(linkedCountySelection?.fips === fips ? null : row);
 }
 
 function subscribeToLinkedCountySelection(listener) {
@@ -166,7 +174,7 @@ async function initializeCountyMap() {
         .on("pointerenter pointermove", (event, county) => showCounty(event, county, metric, config))
         .on("click", (event, county) => {
           const row = data.get(String(county.id).padStart(5, "0"));
-          if (row) setLinkedCountySelection(row);
+          if (row) toggleLinkedCountySelection(row);
         })
         .on("pointerleave", () => { tooltip.hidden = true; });
 
@@ -616,11 +624,11 @@ async function initializeStoryCharts() {
         .attr("tabindex", 0)
         .attr("role", "button")
         .attr("aria-label", item => `${item.row.county_name}, ${item.row.state_name}: select county`)
-        .on("click", (event, item) => setLinkedCountySelection(item.row))
+        .on("click", (event, item) => toggleLinkedCountySelection(item.row))
         .on("keydown", (event, item) => {
           if (event.key === "Enter" || event.key === " ") {
             event.preventDefault();
-            setLinkedCountySelection(item.row);
+            toggleLinkedCountySelection(item.row);
           }
         });
 
@@ -647,7 +655,7 @@ async function initializeStoryCharts() {
           const pointX = delaunay.points[index * 2];
           const pointY = delaunay.points[index * 2 + 1];
           if (Math.hypot(pointerX - pointX, pointerY - pointY) <= 18) {
-            setLinkedCountySelection(values[index].row);
+            toggleLinkedCountySelection(values[index].row);
           }
         })
         .on("pointerleave", () => { serviceLineTooltip.hidden = true; });

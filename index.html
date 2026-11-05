@@ -83,13 +83,14 @@
             <button class="map-measure-option" type="button" data-metric="listed_facility_count" aria-pressed="true">Listed facilities</button>
             <button class="map-measure-option" type="button" data-metric="operating_facility_count" aria-pressed="false">Operating facilities</button>
           </div>
-          <span class="map-hint">Hover for details · Click a county to link it across charts (gold highlight)</span>
+          <span class="map-hint">Click a county to link it; click it again to clear</span>
+          <button class="clear-linked-selection" id="clear-linked-selection" type="button" hidden>Clear county selection</button>
         </div>
         <div class="map-stage" id="map-stage">
           <svg id="county-map" role="img" aria-label="Map of county-level data across the United States"></svg>
           <div class="map-tooltip" id="map-tooltip" role="status" hidden></div>
           <section class="region-popup" id="region-popup" aria-labelledby="region-popup-title" aria-live="polite" hidden>
-            <button class="region-popup-close" id="region-popup-close" type="button" aria-label="Clear selected state">×</button>
+            <button class="region-popup-close" id="region-popup-close" type="button" aria-label="Clear county selection">×</button>
             <span class="mini-label">STATE TOTALS</span>
             <h3 id="region-popup-title"></h3>
             <div class="region-popup-stats">
@@ -178,7 +179,7 @@
             <button class="chart-metric-option line-metric-option" type="button" data-metric="listed" aria-pressed="true">Listed</button>
             <button class="chart-metric-option line-metric-option" type="button" data-metric="operating" aria-pressed="false">Operating</button>
           </div>
-          <span class="chart-control-hint">Hover near a point for details; click to link its county (gold highlight) · logarithmic distance axis</span>
+          <span class="chart-control-hint">Click a point to link its county; click it again to clear · logarithmic distance axis</span>
         </div>
         <div class="story-chart-stage service-line-chart-stage" id="service-line-chart-stage">
           <svg id="service-line-chart" role="img" aria-label="Scatter plot of county listed or operating facility count against estimated median distance to an in-service line" aria-describedby="service-line-chart-summary"></svg>
