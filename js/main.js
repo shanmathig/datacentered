@@ -63,6 +63,25 @@ function loadD3() {
   return d3DependencyPromise;
 }
 
+let linkedCountySelection = null;
+const linkedCountySelectionListeners = new Set();
+
+function setLinkedCountySelection(row) {
+  linkedCountySelection = row ? {
+    fips: String(row.county_fips).padStart(5, "0"),
+    state: row.state,
+    countyName: row.county_name,
+    stateName: row.state_name,
+    rucc: Number(row.rucc_2023),
+  } : null;
+  linkedCountySelectionListeners.forEach(listener => listener(linkedCountySelection));
+}
+
+function subscribeToLinkedCountySelection(listener) {
+  linkedCountySelectionListeners.add(listener);
+  listener(linkedCountySelection);
+}
+
 async function initializeCountyMap() {
   const stage = document.getElementById("map-stage");
   const loading = document.getElementById("map-loading");
@@ -72,6 +91,7 @@ async function initializeCountyMap() {
   const summary = document.getElementById("map-summary");
   const legend = document.getElementById("map-legend");
   let selectedState = null;
+  let selectedCountyFips = null;
   let renderMap = () => {};
 
   try {
@@ -124,15 +144,20 @@ async function initializeCountyMap() {
       const color = config.scale === "sqrt"
         ? d3.scaleSequentialSqrt(interpolator).domain([0, max])
         : d3.scaleSequential(interpolator).domain([min, max]);
-      svg.attr("viewBox", `0 0 ${width} ${height}`).attr("height", height);
+      svg
+        .attr("viewBox", `0 0 ${width} ${height}`)
+        .attr("height", height)
+        .classed("has-linked-selection", Boolean(linkedCountySelection));
       svg.selectAll("path")
         .data(counties, county => county.id)
         .join("path")
         .attr("class", "county")
+        .attr("data-county-fips", county => String(county.id).padStart(5, "0"))
         .classed("state-selected", county => {
           const row = data.get(String(county.id).padStart(5, "0"));
           return Boolean(selectedState && row?.state === selectedState);
         })
+        .classed("county-linked-selected", county => String(county.id).padStart(5, "0") === selectedCountyFips)
         .attr("d", path)
         .attr("fill", county => {
           const value = countyValue(county, metric);
@@ -141,7 +166,7 @@ async function initializeCountyMap() {
         .on("pointerenter pointermove", (event, county) => showCounty(event, county, metric, config))
         .on("click", (event, county) => {
           const row = data.get(String(county.id).padStart(5, "0"));
-          if (row) selectState(row.state);
+          if (row) setLinkedCountySelection(row);
         })
         .on("pointerleave", () => { tooltip.hidden = true; });
 
@@ -182,10 +207,7 @@ async function initializeCountyMap() {
     }
 
     function clearSelectedState() {
-      selectedState = null;
-      regionPopup.hidden = true;
-      summary.textContent = "Hover or tap a county to see its details.";
-      renderMap();
+      setLinkedCountySelection(null);
     }
 
     function showCounty(event, county, metric, config) {
@@ -214,6 +236,17 @@ async function initializeCountyMap() {
     });
     document.getElementById("region-popup-close").addEventListener("click", clearSelectedState);
     renderMap = render;
+    subscribeToLinkedCountySelection(selection => {
+      selectedCountyFips = selection?.fips ?? null;
+      if (selection) {
+        selectState(selection.state);
+      } else {
+        selectedState = null;
+        regionPopup.hidden = true;
+        summary.textContent = "Hover or tap a county to see its details.";
+        renderMap();
+      }
+    });
     new ResizeObserver(render).observe(stage);
     render();
   } catch (error) {
@@ -352,8 +385,6 @@ async function initializeStoryCharts() {
         .attr("width", value => x(value.rate))
         .attr("height", y.bandwidth())
         .attr("rx", 3)
-        .attr("tabindex", 0)
-        .attr("role", "button")
         .attr("aria-label", value => `${value.description}: ${d3.format(".1%")(value.rate)} of ${value.counties} counties have at least one ${measureName} facility`);
 
       groups.append("text")
@@ -386,6 +417,7 @@ async function initializeStoryCharts() {
       const totalWithFacilities = d3.sum(values, value => value.countiesWithFacilities);
       ruralSummary.textContent = `${d3.format(",")(totalWithFacilities)} of ${d3.format(",")(totalCounties)} counties (${d3.format(".1%")(totalWithFacilities / totalCounties)}) have at least one ${measureName} facility.`;
       document.getElementById("rural-chart-loading").hidden = true;
+      syncSelectionHighlights();
     }
 
     function renderFactorChart() {
@@ -415,6 +447,7 @@ async function initializeStoryCharts() {
           x0: bin.x0,
           x1: bin.x1,
           counties: bin.length,
+          countyFips: bin.map(item => String(item.row.county_fips).padStart(5, "0")),
           countiesWithFacilities: bin.filter(item => item.facilities > 0).length,
           facilityTotal: d3.sum(bin, item => item.facilities),
           rate: bin.filter(item => item.facilities > 0).length / bin.length,
@@ -479,11 +512,12 @@ async function initializeStoryCharts() {
         .data(bins)
         .join("circle")
         .attr("class", "factor-point")
+        .attr("data-income-group", bin => bin.index)
         .attr("cx", bin => x(bin.index))
         .attr("cy", bin => y(bin.rate))
         .attr("r", 6)
         .attr("tabindex", 0)
-        .attr("role", "button")
+        .attr("role", "img")
         .attr("aria-label", bin => `${factor.label}, group ${bin.index} of ${bins.length}: ${d3.format(".1%")(bin.rate)} of ${bin.counties} counties have at least one ${measureName} facility`)
         .on("pointerenter pointermove", showValue)
         .on("focus", showValue)
@@ -515,6 +549,7 @@ async function initializeStoryCharts() {
 
       factorSummary.textContent = `${d3.format(",")(validRows.length)} counties with reported ${factor.label.toLowerCase()}; ${d3.format(".1%")(overallRate)} have at least one ${measureName} facility. Missing factor values are excluded.`;
       document.getElementById("factor-chart-loading").hidden = true;
+      syncSelectionHighlights();
     }
 
     function renderServiceLineChart() {
@@ -573,10 +608,21 @@ async function initializeStoryCharts() {
         .data(values)
         .join("circle")
         .attr("class", "service-line-point")
+        .attr("data-county-fips", item => String(item.row.county_fips).padStart(5, "0"))
         .attr("cx", item => x(item.distance))
         .attr("cy", item => y(item.facilities))
         .attr("r", 4)
-        .attr("pointer-events", "none");
+        .attr("pointer-events", "none")
+        .attr("tabindex", 0)
+        .attr("role", "button")
+        .attr("aria-label", item => `${item.row.county_name}, ${item.row.state_name}: select county`)
+        .on("click", (event, item) => setLinkedCountySelection(item.row))
+        .on("keydown", (event, item) => {
+          if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
+            setLinkedCountySelection(item.row);
+          }
+        });
 
       const delaunay = d3.Delaunay.from(values, item => x(item.distance), item => y(item.facilities));
       plot.append("rect")
@@ -595,6 +641,15 @@ async function initializeStoryCharts() {
           }
           showValue(event, values[index]);
         })
+        .on("click", event => {
+          const [pointerX, pointerY] = d3.pointer(event, plot.node());
+          const index = delaunay.find(pointerX, pointerY);
+          const pointX = delaunay.points[index * 2];
+          const pointY = delaunay.points[index * 2 + 1];
+          if (Math.hypot(pointerX - pointX, pointerY - pointY) <= 18) {
+            setLinkedCountySelection(values[index].row);
+          }
+        })
         .on("pointerleave", () => { serviceLineTooltip.hidden = true; });
 
       chart.append("text")
@@ -611,6 +666,7 @@ async function initializeStoryCharts() {
 
       serviceLineSummary.textContent = `Each point is one of ${d3.format(",")(values.length)} counties with a reported line-distance estimate (range ${d3.format(".3~g")(minDistance)}–${d3.format(".3~g")(maxDistance)} miles), out of ${d3.format(",")(rows.length)} counties in the dataset. Points may overlap.`;
       document.getElementById("service-line-chart-loading").hidden = true;
+      syncSelectionHighlights();
     }
 
     function renderWaterStressChart() {
@@ -649,6 +705,7 @@ async function initializeStoryCharts() {
         .data(bubbles, bubble => bubble.data.state)
         .join("g")
         .attr("class", "water-stress-bubble")
+        .attr("data-state", bubble => bubble.data.state)
         .attr("transform", bubble => `translate(${bubble.x},${bubble.y})`);
 
       nodes.append("circle")
@@ -656,7 +713,7 @@ async function initializeStoryCharts() {
         .attr("r", bubble => bubble.r)
         .attr("fill", bubble => color(bubble.data.waterStress))
         .attr("tabindex", 0)
-        .attr("role", "button")
+        .attr("role", "img")
         .attr("aria-label", bubble => `${bubble.data.stateName}: ${d3.format(",")(bubble.data.operatingFacilities)} operating facilities in counties with reported stress; mean county water-stress indicator ${d3.format(".2f")(bubble.data.waterStress)} from ${bubble.data.countyCount} of ${bubble.data.datasetCountyCount} counties`)
         .on("pointerenter pointermove", (event, bubble) => showWaterStressValue(event, bubble.data))
         .on("focus", (event, bubble) => showWaterStressValue(event, bubble.data))
@@ -732,7 +789,26 @@ async function initializeStoryCharts() {
       const zeroFacilityJurisdictions = jurisdictionsWithData - stateValues.length;
       waterStressSummary.textContent = `Stress values are reported for ${d3.format(",")(countiesWithStress)} of ${d3.format(",")(rows.length)} dataset counties across ${jurisdictionsWithData} jurisdictions. Bubbles show ${stateValues.length} jurisdictions with at least one operating facility.${zeroFacilityJurisdictions ? ` ${zeroFacilityJurisdictions} jurisdictions with stress data and zero operating facilities are omitted.` : ""}`;
       document.getElementById("water-stress-chart-loading").hidden = true;
+      syncSelectionHighlights();
     }
+
+    function syncSelectionHighlights() {
+      const selection = linkedCountySelection;
+      ruralSvg.classed("has-linked-selection", Boolean(selection));
+      factorSvg.classed("has-linked-selection", Boolean(selection));
+      serviceLineSvg.classed("has-linked-selection", Boolean(selection));
+      waterStressSvg.classed("has-linked-selection", Boolean(selection));
+      ruralSvg.selectAll(".rural-bar")
+        .classed("is-linked-selection", value => Boolean(selection && Number(selection.rucc) === value.code));
+      factorSvg.selectAll(".factor-point")
+        .classed("is-linked-selection", bin => Boolean(selection && bin.countyFips.includes(selection.fips)));
+      serviceLineSvg.selectAll(".service-line-point")
+        .classed("is-linked-selection", item => Boolean(selection && String(item.row.county_fips).padStart(5, "0") === selection.fips));
+      waterStressSvg.selectAll(".water-stress-bubble")
+        .classed("is-linked-selection", bubble => Boolean(selection && bubble.data.state === selection.state));
+    }
+
+    subscribeToLinkedCountySelection(syncSelectionHighlights);
 
     document.querySelectorAll(".rural-metric-option").forEach(button => {
       button.addEventListener("click", () => {

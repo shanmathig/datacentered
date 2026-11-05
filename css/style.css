@@ -8,6 +8,7 @@
   --muted: #8998b4;
   --cyan: #4ee8e0;
   --purple: #9a7cff;
+  --linked-highlight: #ffe66d;
   --font: "DM Sans", sans-serif;
   --display: "Space Grotesk", sans-serif;
 }
@@ -137,6 +138,10 @@ footer a:last-child { color: var(--cyan); }
 .region-popup-stats span { color: var(--muted); font-size: 9px; letter-spacing: 1.1px; }
 .region-popup p { margin: 14px 0 0; color: var(--muted); font-size: 11px; }
 .county.state-selected { stroke: var(--cyan); stroke-width: 1px; }
+.county.county-linked-selected { stroke: #fff; stroke-width: 2px; }
+#county-map.has-linked-selection .county:not(.county-linked-selected) { opacity: .16; }
+#county-map.has-linked-selection .county.state-selected:not(.county-linked-selected) { stroke: rgba(78,232,224,.35); stroke-width: .5px; }
+#county-map.has-linked-selection .county.county-linked-selected { fill: var(--linked-highlight) !important; stroke: #fff; stroke-width: 2.5px; filter: drop-shadow(0 0 3px var(--linked-highlight)); }
 .map-loading { position: absolute; inset: 0; display: grid; place-items: center; color: var(--muted); font-size: 13px; }
 .map-loading[hidden] { display: none; }
 .map-footer { display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; padding: 18px 24px 22px; border-top: 1px solid var(--border); }
@@ -174,19 +179,32 @@ footer a:last-child { color: var(--cyan); }
 .story-axis path,.story-axis line { stroke: rgba(160,185,230,.28); }
 .rural-category-label { fill: #d7e1f1; font: 11px var(--font); }
 .rural-category-detail { fill: #7f8da7; font-size: 9px; }
-.rural-bar { cursor: pointer; transition: opacity .16s; }
+.rural-bar { transition: opacity .16s; }
 .rural-bar.metro-bar { fill: #4ee8e0; }
 .rural-bar.nonmetro-bar { fill: #9a7cff; }
 .rural-bar:hover,.rural-bar:focus { opacity: .76; outline: none; stroke: #f0f5ff; stroke-width: 1.5px; }
+.rural-bar.is-linked-selection { stroke: #fff; stroke-width: 2px; }
+#rural-chart.has-linked-selection .rural-bar:not(.is-linked-selection) { opacity: .16; }
+#rural-chart.has-linked-selection .rural-bar.is-linked-selection { fill: var(--linked-highlight); stroke: #fff; stroke-width: 3px; filter: drop-shadow(0 0 5px var(--linked-highlight)); }
 .rural-rate-label { fill: #f0f5ff; font: 600 10px var(--display); pointer-events: none; }
 .story-axis-title,.story-y-axis-title { fill: #9aa9c2; font: 10px var(--font); }
 .factor-trend { fill: none; stroke: #4ee8e0; stroke-width: 2; }
-.factor-point { fill: #4ee8e0; stroke: #0e1423; stroke-width: 2; cursor: pointer; transition: r .15s,fill .15s; }
+.factor-point { fill: #4ee8e0; stroke: #0e1423; stroke-width: 2; transition: r .15s,fill .15s; }
 .factor-point:hover,.factor-point:focus { r: 8; fill: #b7fffb; outline: none; }
+.factor-point.is-linked-selection { stroke: #fff; stroke-width: 3px; }
+#factor-chart.has-linked-selection .factor-trend { opacity: .12; }
+#factor-chart.has-linked-selection .factor-point:not(.is-linked-selection) { opacity: .14; }
+#factor-chart.has-linked-selection .factor-point.is-linked-selection { r: 10; fill: var(--linked-highlight); stroke: #fff; stroke-width: 3px; filter: drop-shadow(0 0 5px var(--linked-highlight)); }
 .service-line-point { fill: rgba(78,232,224,.48); stroke: #4ee8e0; stroke-width: .8px; pointer-events: none; }
+.service-line-point.is-linked-selection { fill: #fff; stroke: var(--purple); stroke-width: 2.5px; r: 7; }
+#service-line-chart.has-linked-selection .service-line-point:not(.is-linked-selection) { opacity: .08; }
+#service-line-chart.has-linked-selection .service-line-point.is-linked-selection { fill: var(--linked-highlight); stroke: #fff; stroke-width: 3px; r: 9; filter: drop-shadow(0 0 5px var(--linked-highlight)); }
 .service-line-interaction { cursor: crosshair; }
-.water-stress-bubble circle { stroke: rgba(240,245,255,.55); stroke-width: 1px; cursor: pointer; transition: stroke-width .15s,filter .15s; }
+.water-stress-bubble circle { stroke: rgba(240,245,255,.55); stroke-width: 1px; transition: stroke-width .15s,filter .15s; }
 .water-stress-bubble circle:hover,.water-stress-bubble circle:focus { stroke: #fff; stroke-width: 2px; filter: brightness(1.16); outline: none; }
+.water-stress-bubble.is-linked-selection circle { stroke: #fff; stroke-width: 3px; filter: brightness(1.16); }
+#water-stress-chart.has-linked-selection .water-stress-bubble:not(.is-linked-selection) { opacity: .16; }
+#water-stress-chart.has-linked-selection .water-stress-bubble.is-linked-selection circle { stroke: var(--linked-highlight); stroke-width: 5px; filter: drop-shadow(0 0 7px var(--linked-highlight)) brightness(1.25); }
 .water-stress-bubble-label { fill: #f0f5ff; stroke: rgba(7,11,20,.72); stroke-width: 2px; paint-order: stroke; font: 600 10px var(--display); pointer-events: none; }
 .water-stress-legend-title { fill: #9aa9c2; font: 700 8px var(--font); letter-spacing: .6px; }
 .water-stress-legend-label { fill: #8998b4; font: 9px var(--font); }

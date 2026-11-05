@@ -83,7 +83,7 @@
             <button class="map-measure-option" type="button" data-metric="listed_facility_count" aria-pressed="true">Listed facilities</button>
             <button class="map-measure-option" type="button" data-metric="operating_facility_count" aria-pressed="false">Operating facilities</button>
           </div>
-          <span class="map-hint">Hover for county details · Click a county to select its state</span>
+          <span class="map-hint">Hover for details · Click a county to link it across charts (gold highlight)</span>
         </div>
         <div class="map-stage" id="map-stage">
           <svg id="county-map" role="img" aria-label="Map of county-level data across the United States"></svg>
@@ -127,7 +127,7 @@
         </div>
         <div class="story-chart-footer">
           <p class="story-chart-summary" id="rural-chart-summary" aria-live="polite">Hover over a bar for county and facility counts.</p>
-          <p class="story-chart-note">Source: cleaned county dataset. Cyan marks metro counties (RUCC 1–3); purple marks nonmetro counties (RUCC 4–9). This view counts counties, not individual facilities.</p>
+          <p class="story-chart-note">Source: cleaned county dataset. Cyan marks metro counties (RUCC 1–3); purple marks nonmetro counties (RUCC 4–9). This view counts counties, not individual facilities; a linked county highlights its RUCC category.</p>
         </div>
       </div>
     </section>
@@ -156,7 +156,7 @@
         </div>
         <div class="story-chart-footer">
           <p class="story-chart-summary" id="factor-chart-summary" aria-live="polite">Hover over a point for the factor range and county counts.</p>
-          <p class="story-chart-note">Source: cleaned county dataset. Counties are grouped into income quantiles; groups may be uneven where many share a value, and counties with missing income values are excluded. Association is descriptive and does not imply causation.</p>
+          <p class="story-chart-note">Source: cleaned county dataset. Counties are grouped into income quantiles; groups may be uneven where many share a value, and counties with missing income values are excluded. A linked county highlights its income group. Association is descriptive and does not imply causation.</p>
         </div>
       </div>
     </section>
@@ -178,7 +178,7 @@
             <button class="chart-metric-option line-metric-option" type="button" data-metric="listed" aria-pressed="true">Listed</button>
             <button class="chart-metric-option line-metric-option" type="button" data-metric="operating" aria-pressed="false">Operating</button>
           </div>
-          <span class="chart-control-hint">Hover near a point for county details · logarithmic distance axis</span>
+          <span class="chart-control-hint">Hover near a point for details; click to link its county (gold highlight) · logarithmic distance axis</span>
         </div>
         <div class="story-chart-stage service-line-chart-stage" id="service-line-chart-stage">
           <svg id="service-line-chart" role="img" aria-label="Scatter plot of county listed or operating facility count against estimated median distance to an in-service line" aria-describedby="service-line-chart-summary"></svg>
@@ -186,7 +186,7 @@
         </div>
         <div class="story-chart-footer">
           <p class="story-chart-summary" id="service-line-chart-summary" aria-live="polite">Each point represents a county with a reported line-distance estimate.</p>
-          <p class="story-chart-note">Source: cleaned county dataset. The horizontal axis is logarithmic because reported distances span several orders of magnitude. Counties without a reported distance are omitted; points may overlap. This descriptive comparison does not imply causation.</p>
+          <p class="story-chart-note">Source: cleaned county dataset. The horizontal axis is logarithmic because reported distances span several orders of magnitude. Counties without a reported distance are omitted; points may overlap. Selecting a county highlights its state bubble. This descriptive comparison does not imply causation.</p>
         </div>
       </div>
     </section>
@@ -196,7 +196,7 @@
       <div class="story-header">
         <div>
           <h2>Operating facilities<br /><span class="gradient-text">and county water stress.</span></h2>
-          <p>Each bubble represents a state or DC. Larger bubbles indicate more operating facilities; color shows the average reported watershed water-stress value across counties.</p>
+          <p>Each bubble represents a state or DC. Larger bubbles indicate more operating facilities; color shows the average reported watershed water-stress value across counties. A selected county highlights its state bubble.</p>
         </div>
         <span class="chapter-index">05 — 05</span>
       </div>
