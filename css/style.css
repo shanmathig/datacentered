@@ -235,7 +235,8 @@ footer a:last-child { color: var(--cyan); }
   width: 100%;
   margin: 100px auto 40px;
   text-align: center;
-  font-size: clamp(2.5rem, 5vw, 5rem);
+  font-size: clamp(2rem, 4vw, 4rem);
   font-weight: 700;
   line-height: 1.15;
+  white-space: nowrap;
 }
