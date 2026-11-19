@@ -230,3 +230,11 @@ footer a:last-child { color: var(--cyan); }
   .service-line-chart-stage,.water-stress-chart-stage { min-height: 420px; }
   .story-chart-tooltip { font-size: 10px; }
 }
+
+.overview-heading {
+  margin-top: 80px;
+  margin-bottom: 0;
+  font-size: clamp(2.5rem, 5vw, 5rem);
+  font-weight: 700;
+  line-height: 1.1;
+}
