@@ -703,7 +703,7 @@ async function initializeStoryCharts() {
         .sum(value => value.operatingFacilities || 0)
         .sort((a, b) => b.value - a.value);
       const bubbles = pack(root).leaves();
-      const color = d3.scaleSequential(d3.interpolateCividis).domain([0, 1]);
+      const color = d3.scaleSequential(d3.interpolateBlues).domain([0, 1]);
       const chart = waterStressSvg.attr("viewBox", `0 0 ${width} ${height}`).attr("height", height);
       chart.selectAll("*").remove();
       chart.append("title").text("State operating-facility counts and mean county water stress");
