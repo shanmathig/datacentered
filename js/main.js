@@ -496,7 +496,7 @@ async function initializeStoryCharts() {
         .attr("x", plotWidth - 3)
         .attr("y", -12)
         .attr("text-anchor", "end")
-        .text(`Valid-data overall · ${d3.format(".1%")(overallRate)}`);
+        .text(`Dashed line is the dataset average · ${d3.format(".1%")(overallRate)}`);
 
       plot.append("path")
         .datum(bins)
