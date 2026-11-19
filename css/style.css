@@ -232,9 +232,9 @@ footer a:last-child { color: var(--cyan); }
 }
 
 .overview-heading {
-  margin-top: 80px;
-  margin-bottom: 0;
-  font-size: clamp(2.5rem, 5vw, 5rem);
+  margin: 100px auto 40px;
+  text-align: center;
+  font-size: clamp(2.5rem, 4vw, 4rem);
   font-weight: 700;
-  line-height: 1.1;
+  line-height: 1.15;
 }
