@@ -704,7 +704,7 @@ async function initializeStoryCharts() {
         .sort((a, b) => b.value - a.value);
       const bubbles = pack(root).leaves();
       const maxStress = d3.max(stateValues, value => value.waterStress);
-const color = d3.scaleSequential(d3.interpolateBlues).domain([0, maxStress]);
+const color = d3.scaleSequential(d3.interpolateBlues).domain([maxStress, 0]);
       const chart = waterStressSvg.attr("viewBox", `0 0 ${width} ${height}`).attr("height", height);
       chart.selectAll("*").remove();
       chart.append("title").text("State operating-facility counts and mean county water stress");
