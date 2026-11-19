@@ -233,7 +233,7 @@ footer a:last-child { color: var(--cyan); }
 
 .overview-heading {
   width: 100%;
-  margin: 100px auto 40px;
+  margin: 70px auto 0;
   text-align: center;
   font-size: clamp(2rem, 4vw, 4rem);
   font-weight: 700;
